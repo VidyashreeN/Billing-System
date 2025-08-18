@@ -1,4 +1,6 @@
 package com.example.Billing.System.controller;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,11 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.Billing.System.service.InvoiceService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-
-
-
-// 
 
 
 @RestController
@@ -33,15 +30,16 @@ public class InvoiceController {
         return ResponseEntity.ok("Invoice created successfully with details: " );
     }
     
-    @GetMapping("/{id}")
-    public ResponseEntity<InvoiceDTO> getInvoiceById(@PathVariable Long id) {
-        InvoiceDTO inv = invoiceService.getInvoiceById(id);
-        return new ResponseEntity<> (inv, HttpStatus.OK)    ;
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<InvoiceDTO>> getInvoiceByUserId(@PathVariable Long userId) {
+        List<InvoiceDTO> inv = invoiceService.getInvoiceByUserId(userId);
+        return new ResponseEntity<>(inv, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> getAllInvoices() {
-        
-        return ResponseEntity.ok("Invoice retrieved successfully");
+    @GetMapping("/all")
+    public ResponseEntity<List<InvoiceDTO>> getAllInvoices() {
+        List<InvoiceDTO> invoices = invoiceService.getAllInvoices();
+        return new ResponseEntity<>(invoices, HttpStatus.OK);
     }
 
 }
