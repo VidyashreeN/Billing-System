@@ -4,9 +4,9 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.example.Billing.System.Repository.UserRepository;
-import com.example.Billing.System.Repository.entity.User;
 import com.example.Billing.System.controller.UserDTO;
+import com.example.Billing.System.repository.UserRepository;
+import com.example.Billing.System.repository.entity.User;
 
 @Service
 public class UserServiceImplementation implements UserService {

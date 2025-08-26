@@ -1,10 +1,11 @@
-package com.example.Billing.System.Repository.entity;
+package com.example.Billing.System.repository.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,11 +30,12 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @Column(name = "company_name")
     private String companyName;
     private BigDecimal amount;
     private LocalDate date;
 
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_Id")
     @ManyToOne
     @JsonIgnore
     private User user;

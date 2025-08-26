@@ -1,14 +1,19 @@
 package com.example.Billing.System.service;
-import com.example.Billing.System.Repository.InvoiceRepository;
-import com.example.Billing.System.Repository.UserRepository;
-import com.example.Billing.System.Repository.entity.Invoice;
-import com.example.Billing.System.Repository.entity.User;
 import com.example.Billing.System.controller.InvoiceDTO;
+import com.example.Billing.System.repository.InvoiceRepository;
+import com.example.Billing.System.repository.UserRepository;
+import com.example.Billing.System.repository.entity.Invoice;
+import com.example.Billing.System.repository.entity.User;
+
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,9 +33,7 @@ public class InvoiceServiceImplementation implements InvoiceService {
     }
 
     @Override
-    public void saveInvoice(InvoiceDTO invoice) throws Exception {
-        // Save the invoice using the repository
-        try {
+    public void saveInvoice(InvoiceDTO invoice) {
         
             // Convert InvoiceDTO to Invoice entity
             Invoice invoiceEntity = modelMapper.map(invoice, Invoice.class);
@@ -44,10 +47,8 @@ public class InvoiceServiceImplementation implements InvoiceService {
             invoiceRepository.save(invoiceEntity);
             //print the invoice entity for debugging
             System.out.println("Invoice Entity: " + invoiceEntity.toString());
-        }
-        catch(Exception e) {
-            throw new Exception("Error saving invoice: " + e.getMessage());
-        }
+        
+
     }
 
     @Override
@@ -55,11 +56,12 @@ public class InvoiceServiceImplementation implements InvoiceService {
         
         List<Invoice> invoices = invoiceRepository.findByUserId(userId);
         if (invoices.isEmpty()) {
-            throw new RuntimeException("No invoices found for user with id: " + userId);
+            throw new EntityNotFoundException("No invoices found for user with id: " + userId);   
         }
         List<InvoiceDTO> invoiceDTOs = invoices.stream()
             .map(inv -> modelMapper.map(inv, InvoiceDTO.class))
             .toList();
+        invoiceDTOs.forEach(System.out::println);
         return invoiceDTOs;
     }
 
@@ -74,15 +76,20 @@ public class InvoiceServiceImplementation implements InvoiceService {
 }
 
     @Override
-    public List<InvoiceDTO> getAllInvoices(){
+    public Page<InvoiceDTO> getAllInvoices(int pageNumber, int pageSize, String sortBy, String sortOrder){
         
         List<Invoice> allInvoices = invoiceRepository.findAll();
         if (allInvoices.isEmpty()) {
             throw new RuntimeException("No invoices found");
          }
-        return allInvoices.stream()
-                .map(inv -> modelMapper.map(inv, InvoiceDTO.class))
-                .toList();
+
+        Sort sort = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        PageRequest pageDetails = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page<Invoice> invoicePage = invoiceRepository.findAll(pageDetails);
+        Page<InvoiceDTO> allInvoiceDTO = invoicePage.map(inv->modelMapper.map(inv, InvoiceDTO.class));
+        
+        return allInvoiceDTO;
    
     }
 }

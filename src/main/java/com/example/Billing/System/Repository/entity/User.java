@@ -1,4 +1,4 @@
-package com.example.Billing.System.Repository.entity;
+package com.example.Billing.System.repository.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
