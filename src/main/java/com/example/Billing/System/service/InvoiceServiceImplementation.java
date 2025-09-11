@@ -1,5 +1,5 @@
 package com.example.Billing.System.service;
-import com.example.Billing.System.controller.InvoiceDTO;
+import com.example.Billing.System.model.InvoiceDTO;
 import com.example.Billing.System.repository.InvoiceRepository;
 import com.example.Billing.System.repository.UserRepository;
 import com.example.Billing.System.repository.entity.Invoice;
@@ -8,13 +8,12 @@ import com.example.Billing.System.repository.entity.User;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+// import 
 
 @Service
 public class InvoiceServiceImplementation implements InvoiceService {
@@ -27,7 +26,7 @@ public class InvoiceServiceImplementation implements InvoiceService {
 
     // Constructor injection for InvoiceRepository
     public InvoiceServiceImplementation(InvoiceRepository invoiceRepository, UserRepository userRepository, ModelMapper modelMapper) {
-        this.modelMapper = new ModelMapper();
+        this.modelMapper = modelMapper;
         this.invoiceRepository = invoiceRepository;
         this.userRepository = userRepository;
     }
@@ -48,7 +47,6 @@ public class InvoiceServiceImplementation implements InvoiceService {
             //print the invoice entity for debugging
             System.out.println("Invoice Entity: " + invoiceEntity.toString());
         
-
     }
 
     @Override

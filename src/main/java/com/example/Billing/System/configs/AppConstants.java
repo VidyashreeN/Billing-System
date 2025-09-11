@@ -1,4 +1,4 @@
-package com.example.Billing.System.configuration;
+package com.example.Billing.System.configs;
 
 public class AppConstants {
     public static final String PAGE_NUMBER = "0";

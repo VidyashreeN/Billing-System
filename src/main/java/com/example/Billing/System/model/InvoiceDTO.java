@@ -1,8 +1,6 @@
-package com.example.Billing.System.controller;
+package com.example.Billing.System.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-import com.example.Billing.System.repository.entity.User;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;

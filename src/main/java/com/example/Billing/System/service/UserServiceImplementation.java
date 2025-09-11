@@ -1,10 +1,12 @@
 package com.example.Billing.System.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.example.Billing.System.controller.UserDTO;
+import com.example.Billing.System.model.ResponseUserDTO;
+import com.example.Billing.System.model.UserDTO;
 import com.example.Billing.System.repository.UserRepository;
 import com.example.Billing.System.repository.entity.User;
 
@@ -23,20 +25,23 @@ public class UserServiceImplementation implements UserService {
     public void createUser(UserDTO userDTO) throws Exception {
         try{
             User user = modelMapper.map(userDTO, User.class);
+             if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+                throw new Exception("Email already in use: " + user.getEmail());
+            }
             userRepository.save(user);
         }
         catch(Exception e) {
             throw new Exception("Error creating user: " + e.getMessage());
         }
-        System.out.println("User created successfully: " + userDTO.getName());
+        System.out.println("User created successfully: " + userDTO.getName()  );
        
     }
 
     @Override
-    public UserDTO getUserById(Long id) {
+    public ResponseUserDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        ResponseUserDTO userDTO = modelMapper.map(user, ResponseUserDTO.class);
         System.out.println("Retrieved User: " + userDTO.getName());
         return userDTO;
     }
@@ -52,7 +57,12 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return null; 
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .toList();
+
     }
     
 

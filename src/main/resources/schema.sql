@@ -2,7 +2,9 @@ drop table if exists users;
 
 create table users (
     id LONG AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(256) NOT NULL
+    name VARCHAR(256) NOT NULL,
+    email VARCHAR(256) UNIQUE,
+    password VARCHAR(256) NOT NULL
     );
 
 drop table if exists invoices;

@@ -1,4 +1,4 @@
-package com.example.Billing.System.controller;
+package com.example.Billing.System.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,4 +11,6 @@ public class UserDTO {
     
     private Long id;
     private String name;
+    private String email;
+    private String password;
 }

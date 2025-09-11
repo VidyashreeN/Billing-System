@@ -1,9 +1,9 @@
-INSERT INTO users (name) VALUES
-('Gloria Figueroa'),
-('Ana Luther'),
-('Lina Arthur'),
-('Martin Wil'),
-('jack Hose');
+INSERT INTO users (name, email, password) VALUES
+('Gloria Figueroa', 'glo.fig@hmail.com', 'password1'),
+('Lina Arthur', 'lin.art@hmail.com', 'password2'),
+('Ana Luther','ana.lut@hmail.com', 'password3'),
+('Martin Wil', 'mar.wil@@hmail.com', 'password4'),
+('jack Hose', 'jac.hos@hmail.com', 'password5');
 
 
 

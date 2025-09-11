@@ -3,7 +3,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.example.Billing.System.controller.InvoiceDTO;
+import com.example.Billing.System.model.InvoiceDTO;
 
 public interface InvoiceService {
 

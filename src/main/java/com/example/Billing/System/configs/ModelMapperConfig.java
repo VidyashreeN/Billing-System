@@ -1,4 +1,4 @@
-package com.example.Billing.System.configuration;
+package com.example.Billing.System.configs;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
